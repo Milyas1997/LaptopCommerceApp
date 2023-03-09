@@ -18,35 +18,28 @@ class Laptop {
       required this.Ssd,
       required this.Price});
 
-  Laptop.fromJson(json) {
-    Company:
-    json['Company'];
-    Condition :json['Condition'];
-    HDD : json['HDD'];
-    Model :json['Model'];
-    Price : json['Price'];
-    RAM : json['RAM'];
-    Ssd :json['SSD'];
 
-  }
-
-  tojson(){
-    return {
-      'Model':this.Model,
+  tojson() {
+    return  {
+      'Model': this.Model,
       'Price': this.Price,
       'Ram': this.RAM,
       'Ssd': this.Ssd,
-      'Company':this.Company,
+      'Company': this.Company,
       'Condition': this.Condition,
-
     };
   }
-    //Map user data from firebase
-    factory Laptop.fromSnapshot(DocumentSnapshot <Map<String,dynamic>> document){
-      final data= document.data()!;
-      return Laptop(Company: data['Company'], Condition: data['Condition'], HDD: data['HDD'], Model: data['Model'], RAM: data['RAM'], Ssd: data['SSD'], Price: data['Price']);
 
-    }
-
- 
+  //Map user data from firebase
+  factory Laptop.fromSnapshot(Map<String, dynamic> document) {
+   // final dataa = document.data()!;
+    return Laptop(
+        Company: document['Company'],
+        Condition: document['Condition'],
+        HDD: document['HDD'],
+        Model: document['Model'],
+        RAM: document['RAM'],
+        Ssd: document['SSD'],
+        Price: document['Price']);
+  }
 }

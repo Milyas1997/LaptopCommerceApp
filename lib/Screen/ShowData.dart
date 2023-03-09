@@ -72,16 +72,11 @@ class _ShowDataState extends State<ShowData> {
                   .snapshots(),
               builder: ((context, snapshot) {
                 var mydatasnap;
-                final inventoryfield = snapshot.data!.docs;
-                for (var snap in inventoryfield) {
-                  Company = snap['Company'];
-                  print('Comapny: $Company');
-
-                  model = snap['Model'];
-                  print('Model : $model');
-
+                final inventoryfield = snapshot.data?.docs;
+                for (var snap in inventoryfield!) {
                   mydatasnap = snap.data();
-                  var datafirst = Laptop.fromJson(mydatasnap);
+                  print('mydatasnap are: $mydatasnap');
+                  var datafirst = Laptop.fromSnapshot(mydatasnap);
 
                   listdata.add(datafirst);
                 }
@@ -91,11 +86,14 @@ class _ShowDataState extends State<ShowData> {
                   return Text(snapshot.hasError.toString());
                 }
                 return ListView.builder(
-                    itemCount: 1,
+                    itemCount: listdata.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(mydatasnap[index]['Company']),
-                        trailing: Text(mydatasnap[index]['Price']),
+                        leading: Text(listdata[index].Model),
+                        title: Text(listdata[index].Company),
+                        subtitle: Text('SSD:${listdata[index].Ssd}'),
+                        trailing: Text('Price:${listdata[index].Price}'),
+
                         //leading: Text(ssd),
                       );
                     });

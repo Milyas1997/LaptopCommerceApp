@@ -72,7 +72,7 @@ class _ShowDataState extends State<ShowData> {
                   .snapshots(),
               builder: ((context, snapshot) {
                 var mydatasnap;
-                final inventoryfield = snapshot.data?.docs;
+                var inventoryfield = snapshot.data!.docs;
                 for (var snap in inventoryfield!) {
                   mydatasnap = snap.data();
                   print('mydatasnap are: $mydatasnap');

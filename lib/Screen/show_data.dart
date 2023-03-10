@@ -1,11 +1,5 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:laptop_commerce/Database/Database_Service.dart';
 import 'package:laptop_commerce/Model/Laptop.dart';
 
 class ShowData extends StatefulWidget {
@@ -57,7 +51,7 @@ class _ShowDataState extends State<ShowData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Inventory Avaliable',
           style: TextStyle(
               fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
@@ -71,32 +65,35 @@ class _ShowDataState extends State<ShowData> {
                   .collection('Inventory')
                   .snapshots(),
               builder: ((context, snapshot) {
-                var mydatasnap;
-                var inventoryfield = snapshot.data!.docs;
-                for (var snap in inventoryfield!) {
-                  mydatasnap = snap.data();
-                  print('mydatasnap are: $mydatasnap');
-                  var datafirst = Laptop.fromSnapshot(mydatasnap);
+                if (snapshot.hasData) {
+                  Map<String, dynamic> mydatasnap;
+                  List<QueryDocumentSnapshot<Map<String, dynamic>>> inventoryfield = snapshot.data!.docs;
+                  for (QueryDocumentSnapshot<Map<String, dynamic>> snap in inventoryfield) {
+                    mydatasnap = snap.data();
+                    print('mydatasnap are: $mydatasnap');
+                    var datafirst = Laptop.fromSnapshot(mydatasnap);
 
-                  listdata.add(datafirst);
+                    listdata.add(datafirst);
+                  }
+                  return ListView.builder(
+                      itemCount: listdata.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: Text(listdata[index].Model),
+                          title: Text(listdata[index].Company),
+                          subtitle: Text('SSD:${listdata[index].Ssd}'),
+                          trailing: Text('Price:${listdata[index].Price}'),
+
+                          //leading: Text(ssd),
+                        );
+                      });
                 }
 
                 if (snapshot.hasError) {
-                  print(snapshot.data!.docs);
                   return Text(snapshot.hasError.toString());
+                } else {
+                  return const CircularProgressIndicator();
                 }
-                return ListView.builder(
-                    itemCount: listdata.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: Text(listdata[index].Model),
-                        title: Text(listdata[index].Company),
-                        subtitle: Text('SSD:${listdata[index].Ssd}'),
-                        trailing: Text('Price:${listdata[index].Price}'),
-
-                        //leading: Text(ssd),
-                      );
-                    });
               }))),
     );
   }

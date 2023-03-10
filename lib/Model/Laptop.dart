@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 class Laptop {
   late String Company;
@@ -18,28 +17,27 @@ class Laptop {
       required this.Ssd,
       required this.Price});
 
-
   tojson() {
-    return  {
-      'Model': this.Model,
-      'Price': this.Price,
-      'Ram': this.RAM,
-      'Ssd': this.Ssd,
-      'Company': this.Company,
-      'Condition': this.Condition,
+    return {
+      'Model': Model,
+      'Price': Price,
+      'Ram': RAM,
+      'Ssd': Ssd,
+      'Company': Company,
+      'Condition': Condition,
     };
   }
 
   //Map user data from firebase
   factory Laptop.fromSnapshot(Map<String, dynamic> document) {
-   // final dataa = document.data()!;
+    // final dataa = document.data()!;
     return Laptop(
-        Company: document['Company'],
-        Condition: document['Condition'],
-        HDD: document['HDD'],
-        Model: document['Model'],
-        RAM: document['RAM'],
-        Ssd: document['SSD'],
-        Price: document['Price']);
+        Company: document['Company'] ?? "N/A",
+        Condition: document['Condition'] ?? "N/A",
+        HDD: document['HDD'] ?? "N/A",
+        Model: document['Model'] ?? "N/A",
+        RAM: document['RAM'] ?? "N/A",
+        Ssd: document['SSD'] ?? "N/A",
+        Price: document['Price'] ?? "N/A");
   }
 }

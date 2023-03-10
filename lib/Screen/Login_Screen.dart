@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:laptop_commerce/Database/Database_Service.dart';
 
 import '../Custom_Widget/Custom_Button.dart';
-import '../Model/Laptop.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,24 +15,19 @@ class _LoginState extends State<Login> {
   late String email;
   late String password;
   getList() async {
-     await DatabaseHelper().getData();
-    
+    await DatabaseHelper().getData();
   }
 
- 
   @override
   void initState() async {
-    // TODO: implement initState
     super.initState();
-
-   
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Log In',
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
@@ -59,7 +52,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 onChanged: (val) {
                   password = val;
@@ -72,7 +65,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               GestureDetector(
